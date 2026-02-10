@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 
-public class NumerGenerator {
+public class NumberGenerator {
 
     Scanner sc = new Scanner(System.in);
     int numberQuantity;

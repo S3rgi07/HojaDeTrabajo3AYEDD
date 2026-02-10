@@ -51,78 +51,44 @@ public class Sorter<T extends Comparable<T>> {
 
     // Quick Sort
 
-    // Método principal que llama a la recursión
-    public void sort(int[] arr, int bajo, int alto) {
-        if (bajo < alto) {
-            // pi es el índice de partición
-            // arr[pi] está ahora en el lugar correcto
-            int pi = partition(arr, bajo, alto);
+// Método principal que llama a la recursión
+public void sort(T[] input, int bajo, int alto) {
+    if (bajo < alto) {
+        int pi = partition(input, bajo, alto);
 
-            // Ordena recursivamente los elementos antes y después de la partición
-            sort(arr, bajo, pi - 1);
-            sort(arr, pi + 1, alto);
+        sort(input, bajo, pi - 1);
+        sort(input, pi + 1, alto);
+    }
+}
+
+/*
+ * Esta función toma el último elemento como pivote,
+ * coloca el pivote en su posición correcta en el arreglo ordenado,
+ * y coloca todos los menores a la izquierda y los mayores a la derecha
+ */
+private int partition(T[] arr, int bajo, int alto) {
+    T pivote = arr[alto];
+    int i = bajo - 1;
+
+    for (int j = bajo; j < alto; j++) {
+        // Comparación usando Comparable
+        if (arr[j].compareTo(pivote) <= 0) {
+            i++;
+
+            // Intercambiar arr[i] y arr[j]
+            T temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
         }
     }
 
-    /*
-     * Esta función toma el último elemento como pivote,
-     * coloca el pivote en su posición correcta en el arreglo ordenado,
-     * y coloca todos los menores a la izquierda y los mayores a la derecha
-     */
-    int partition(int[] arr, int bajo, int alto) {
-        int pivote = arr[alto];
-        int i = (bajo - 1); // Índice del elemento más pequeño
+    // Colocar el pivote en su posición correcta
+    T temp = arr[i + 1];
+    arr[i + 1] = arr[alto];
+    arr[alto] = temp;
 
-        for (int j = bajo; j < alto; j++) {
-            // Si el elemento actual es menor o igual al pivote
-            if (arr[j] <= pivote) {
-                i++;
-
-                // Intercambiar arr[i] y arr[j]
-                int temp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = temp;
-            }
-        }
-
-        // Intercambiar arr[i+1] y arr[alto] (el pivote)
-        int temp = arr[i + 1];
-        arr[i + 1] = arr[alto];
-        arr[alto] = temp;
-
-        return i + 1;
-    }
-
-    // Método auxiliar para imprimir
-    static void printArray(int[] arr) {
-        for (int value : arr) {
-            System.out.print(value + " ");
-        }
-        System.out.println();
-    }
-
-    //  Radix Sort
-    public static void radixSort(int[] arr) {
-        // 1. Encontrar el número máximo
-        int max = getMax(arr);
-
-        // 2. Aplicar counting sort para cada dígito
-        // exp = 1 -> unidades, 10 -> decenas, 100 -> centenas...
-        for (int exp = 1; max / exp > 0; exp *= 10) {
-            countingSort(arr, exp);
-        }
-    }
-
-    // Devuelve el valor máximo del array
-    private static int getMax(int[] arr) {
-        int max = arr[0];
-        for (int num : arr) {
-            if (num > max) {
-                max = num;
-            }
-        }
-        return max;
-    }
+    return i + 1;
+}
 
     // Counting Sort según el dígito representado por exp
     private static void countingSort(int[] arr, int exp) {
@@ -152,22 +118,48 @@ public class Sorter<T extends Comparable<T>> {
         System.arraycopy(output, 0, arr, 0, n);
     }
 
-    //Insertion Sort
-    public static void insertionSort(int[] arr) {
-        // Recorremos desde el segundo elemento
-        for (int i = 1; i < arr.length; i++) {
+    // Insertion Sort (comparativo)
+public void insertionSort(T[] arr) {
 
-            int key = arr[i]; // elemento a insertar
-            int j = i - 1;
+    // Empezamos desde el segundo elemento
+    for (int i = 1; i < arr.length; i++) {
 
-            // Mover los elementos mayores que key una posición a la derecha
-            while (j >= 0 && arr[j] > key) {
-                arr[j + 1] = arr[j];
-                j--;
-            }
+        T key = arr[i];      // Elemento a insertar
+        int j = i - 1;
 
-            // Insertar key en su posición correcta
-            arr[j + 1] = key;
+        // Mover los elementos mayores que key una posición a la derecha
+        while (j >= 0 && arr[j].compareTo(key) > 0) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+
+        // Insertar key en su posición correcta
+        arr[j + 1] = key;
+    }
+}
+
+
+//Radix Sort
+    public static void radixSort(int[] arr) {
+        // 1. Encontrar el número máximo
+        int max = getMax(arr);
+
+        // 2. Aplicar counting sort para cada dígito
+        // exp = 1 -> unidades, 10 -> decenas, 100 -> centenas...
+        for (int exp = 1; max / exp > 0; exp *= 10) {
+            countingSort(arr, exp);
         }
     }
+
+    // Devuelve el valor máximo del array
+    private static int getMax(int[] arr) {
+        int max = arr[0];
+        for (int num : arr) {
+            if (num > max) {
+                max = num;
+            }
+        }
+        return max;
+    }
+
 }
