@@ -48,9 +48,10 @@ public class NumberGenerator {
             int num = r.nextInt(10000);
             writer.write(num + "\n");
 
-            System.out.println("Se generaron " + numberQuantity + " números correctamente.");
+
         
         }
+            System.out.println("Se generaron " + numberQuantity + " números correctamente.");
         
             
         }catch (IOException e) {

@@ -52,12 +52,12 @@ public class Sorter<T extends Comparable<T>> {
     // Quick Sort
 
 // Método principal que llama a la recursión
-public void sort(T[] input, int bajo, int alto) {
+public void quickSort(T[] input, int bajo, int alto) {
     if (bajo < alto) {
         int pi = partition(input, bajo, alto);
 
-        sort(input, bajo, pi - 1);
-        sort(input, pi + 1, alto);
+        quickSort(input, bajo, pi - 1);
+        quickSort(input, pi + 1, alto);
     }
 }
 

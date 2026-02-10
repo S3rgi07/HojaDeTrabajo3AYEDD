@@ -2,30 +2,41 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // Leer números desde el archivo
+        // 1. Generar el archivo de números
+        NumberGenerator generator = new NumberGenerator();
+        generator.chooseQuantityOfNumbers();
+        generator.generateNumbers();
+
+        // 2. Leer los números desde el archivo
         NumberFileReader reader = new NumberFileReader();
         Integer[] original = reader.readNumbersFromFile("numeros.txt");
 
-        // Crear sorter
+        // Verificación mínima de seguridad
+        if (original.length == 0) {
+            System.out.println("No se pudieron leer números. Abortando ejecución.");
+            return;
+        }
+
+        // 3. Crear el sorter
         Sorter<Integer> sorter = new Sorter<>();
 
-        // Gnome Sort
+        // 4. Gnome Sort
         Integer[] gnome = original.clone();
         sorter.gnomeSort(gnome);
 
-        // Merge Sort
+        // 5. Merge Sort
         Integer[] merge = original.clone();
         sorter.mergeSort(merge);
 
-        // Quick Sort
+        // 6. Quick Sort
         Integer[] quick = original.clone();
         sorter.quickSort(quick, 0, quick.length - 1);
 
-        // Insertion Sort
+        // 7. Insertion Sort
         Integer[] insertion = original.clone();
         sorter.insertionSort(insertion);
 
-        // Radix Sort (no comparativo)
+        // 8. Radix Sort (no comparativo)
         int[] radix = new int[original.length];
         for (int i = 0; i < original.length; i++) {
             radix[i] = original[i];
