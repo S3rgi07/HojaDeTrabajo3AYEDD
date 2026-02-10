@@ -2,34 +2,45 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // Leer números desde el archivo
+        NumberGenerator generator = new NumberGenerator();
+        generator.chooseQuantityOfNumbers();
+        generator.generateNumbers();
+
         NumberFileReader reader = new NumberFileReader();
         Integer[] original = reader.readNumbersFromFile("numeros.txt");
 
-        // Crear sorter
+        if (original == null || original.length == 0) {
+            System.out.println("No se pudieron leer números.");
+            return;
+        }
+
+        System.out.println("Se leyeron " + original.length + " números.");
+
         Sorter<Integer> sorter = new Sorter<>();
 
-        // Gnome Sort
         Integer[] gnome = original.clone();
         sorter.gnomeSort(gnome);
+        System.out.println("Gnome Sort ejecutado.");
 
-        // Merge Sort
         Integer[] merge = original.clone();
         merge = sorter.mergeSort(merge);
+        System.out.println("Merge Sort ejecutado.");
 
-        // Quick Sort
         Integer[] quick = original.clone();
         sorter.quickSort(quick, 0, quick.length - 1);
+        System.out.println("Quick Sort ejecutado.");
 
-        // Insertion Sort
         Integer[] insertion = original.clone();
         sorter.insertionSort(insertion);
+        System.out.println("Insertion Sort ejecutado.");
 
-        // Radix Sort (no comparativo)
         int[] radix = new int[original.length];
         for (int i = 0; i < original.length; i++) {
             radix[i] = original[i];
         }
         Sorter.radixSort(radix);
+        System.out.println("Radix Sort ejecutado.");
+
+        System.out.println("Programa finalizado correctamente.");
     }
 }
